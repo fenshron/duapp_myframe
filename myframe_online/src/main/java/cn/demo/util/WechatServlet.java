@@ -85,13 +85,14 @@ public class WechatServlet extends HttpServlet {
 	            String requestStr = new String(xmldataByte, "UTF-8");
 	            Document doc = DocumentHelper.parseText(requestStr);
 	            Element rootElt = doc.getRootElement();
+	            String msgtype = rootElt.elementText("MsgType");
 	            String content = rootElt.elementText("Content");
 	            String toUserName = rootElt.elementText("ToUserName");
 	            String fromUserName = rootElt.elementText("FromUserName");
 	            //得到所有的有用数据
-	            System.out.println(content+ ":" + toUserName + ":" + fromUserName);
+	            System.out.println("msgtype:"+msgtype+";content:"+content+ ";toUserName:" + toUserName + ";fromUserName:" + fromUserName);
 	            //文本消息
-	            if (! StringUtil.isBlank(content) && "text".equals(content)) {
+	            if (! StringUtil.isBlank(content) && "text".equals(msgtype)) {
 	                String responseStr = "<xml>";
 	                responseStr += "<ToUserName><![CDATA[" + fromUserName
 	                        + "]]></ToUserName>";
@@ -100,13 +101,13 @@ public class WechatServlet extends HttpServlet {
 	                responseStr += "<CreateTime>" + System.currentTimeMillis()
 	                        + "</CreateTime>";
 	                responseStr += "<MsgType><![CDATA[text]]></MsgType>";
-	                responseStr += "<Content>输入text或者news返回相应类型的消息，另外推荐你关注 '红色石头'（完全采用Java完成），反馈和建议请到http://wzwahl36.net</Content>";
+	                responseStr += "<Content>你输入的是文本！</Content>";
 	                responseStr += "<FuncFlag>0</FuncFlag>";
 	                responseStr += "</xml>";
 	                response.getWriter().write(responseStr);
 	            }
-	            //图文消息
-	            else if (! StringUtil.isBlank(content) && "news".equals(content)) {
+	            //图片消息
+	            else if (! StringUtil.isBlank(content) && "image".equals(msgtype)) {
 	                String responseStr = "<xml>";
 	                responseStr += "<ToUserName><![CDATA[" + fromUserName
 	                        + "]]></ToUserName>";
@@ -121,19 +122,11 @@ public class WechatServlet extends HttpServlet {
 	 
 	                responseStr += "<Articles>";
 	                responseStr += "<item>";
-	                responseStr += "<Title><![CDATA[图文消息——红色石头]]></Title>";
-	                responseStr += "<Discription><![CDATA[图文消息正文——红色石头]]></Discription>";
-	                responseStr += "<PicUrl><![CDATA[http://redstones.sinaapp.com/res/images/redstones_wx_258.jpg]]></PicUrl>";
-	                responseStr += "<Url><![CDATA[http://redstones.sinaapp.com/]]></Url>";
+	                responseStr += "<Title><![CDATA[图文消息]]></Title>";
+	                responseStr += "<Discription><![CDATA[图文消息正文]]></Discription>";
+	                responseStr += "<PicUrl><![CDATA[http://img1.wyss.net.cn/uploadfiles/cover/2015/09/29/20150929081026656.jpg]]></PicUrl>";
+	                responseStr += "<Url><![CDATA[http://www.the6688.com/xiaoqingxin/baisediaoqunqingchunmeinv.html]]></Url>";
 	                responseStr += "</item>";
-	 
-	                responseStr += "<item>";
-	                responseStr += "<Title><![CDATA[图文消息——红色石头]]></Title>";
-	                responseStr += "<Discription><![CDATA[图文消息正文——红色石头]]></Discription>";
-	                responseStr += "<PicUrl><![CDATA[http://redstones.sinaapp.com/res/images/redstones_wx_258.jpg]]></PicUrl>";
-	                responseStr += "<Url><![CDATA[http://redstones.sinaapp.com/]]></Url>";
-	                responseStr += "</item>";
-	 
 	                responseStr += "</Articles>";
 	                responseStr += "<FuncFlag>1</FuncFlag>";
 	                responseStr += "</xml>";
