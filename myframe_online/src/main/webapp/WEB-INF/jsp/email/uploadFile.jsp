@@ -34,6 +34,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    var myFiles = _editor.getDialog("attachment");
 	    myFiles.open();
 	}
+	
+	function exportExcel(){
+		$.ajax({
+            cache: true,
+            type: "POST",
+            url:"/servlet/ExportExcel.htm",
+            async: false,
+            error: function(request) {
+                alert("Connection error");
+            },
+            success: function(data) {
+                alert("完成！")
+            }
+        });
+	}
 	</script>
 </head>
 
@@ -42,5 +57,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/plain" id="upload_ue"></script>              
 调用的页面： 
 <input type="text" id="file" /><a href="javascript:void(0);" onclick="upFiles();">上传文件</a>
+<a href="javascript:void(0);" onclick="exportExcel();">导出excel数据</a>
 </body>
 </html>

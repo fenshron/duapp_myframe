@@ -92,7 +92,7 @@ public class WechatServlet extends HttpServlet {
 	            //得到所有的有用数据
 	            System.out.println("msgtype:"+msgtype+";content:"+content+ ";toUserName:" + toUserName + ";fromUserName:" + fromUserName);
 	            //文本消息
-	            if (! StringUtil.isBlank(content) && "text".equals(msgtype)) {
+	            if (StringUtil.isBlank(content) && "text".equals(msgtype)) {
 	                String responseStr = "<xml>";
 	                responseStr += "<ToUserName><![CDATA[" + fromUserName
 	                        + "]]></ToUserName>";
@@ -107,7 +107,7 @@ public class WechatServlet extends HttpServlet {
 	                response.getWriter().write(responseStr);
 	            }
 	            //图片消息
-	            else if (! StringUtil.isBlank(content) && "image".equals(msgtype)) {
+	            else if (StringUtil.isBlank(content) && "image".equals(msgtype)) {
 	                String responseStr = "<xml>";
 	                responseStr += "<ToUserName><![CDATA[" + fromUserName
 	                        + "]]></ToUserName>";

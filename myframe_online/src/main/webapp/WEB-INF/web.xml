@@ -77,6 +77,15 @@
  	<url-pattern>/servlet/WechatCode</url-pattern>
  	</servlet-mapping>
 	
+	<!-- excel -->
+	<servlet>
+ 	<servlet-name>excelCode</servlet-name>
+ 	<servlet-class>cn.demo.util.ExportExcel</servlet-class>
+ 	</servlet>
+ 	<servlet-mapping>
+ 	<servlet-name>excelCode</servlet-name>
+ 	<url-pattern>/servlet/ExportExcel</url-pattern>
+ 	</servlet-mapping>
 
 	
 	<!-- Spring字符集过滤器 -->
