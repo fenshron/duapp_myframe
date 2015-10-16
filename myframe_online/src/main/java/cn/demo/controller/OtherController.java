@@ -16,6 +16,9 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import cn.demo.util.Mail;
@@ -176,35 +179,99 @@ public class OtherController  extends BaseController {
 	}
 	
 	@RequestMapping("/girlpage2")
-	public String girlpage2(){
-		return "other/girl2";
+	public void girlpage2(HttpServletResponse response) throws IOException{
+		OkHttpClient client = new OkHttpClient();
+		Request request2 = new Request.Builder()
+		  .url("http://a.apix.cn/huceo/meinv/?num=20")
+		  .get()
+		  .addHeader("accept", "application/json")
+		  .addHeader("content-type", "application/json")
+		  .addHeader("apix-key", "f5acfaf1edc449b67caf3f61757fd5d0")
+		  .build();
+		Response response2 = client.newCall(request2).execute();
+		if (response2.isSuccessful()) { 
+			InputStream in=response2.body().byteStream();
+			ByteArrayOutputStream out=new ByteArrayOutputStream();
+			try {
+				byte buf[]=new byte[1024];
+				int read = 0;
+				while ((read = in.read(buf)) > 0) {
+					out.write(buf, 0, read);
+				}
+			}  finally {
+				if (in != null) {
+					in.close();
+				}
+			}
+			byte b[]=out.toByteArray( );
+			String result=new String(b,"utf8");
+			response.setContentType("text/javascript; charset=utf-8");
+			response.getWriter().write(result);
+			response.getWriter().flush();
+			response.getWriter().close();
+		} else {        
+			throw new IOException("Unexpected code " + response);
+	    }
 	}
 	
 	@RequestMapping("/taomm")
 	public void getTaomm(HttpServletRequest request,HttpServletResponse response) throws IOException{
-		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
-		String newtime=format.format(new Date());
-		String type=request.getParameter("type");
-		String page=request.getParameter("page");
-		URL u=new URL("http://route.showapi.com/126-2?showapi_appid=10261&showapi_timestamp="+newtime+"&type="+type+"&order=&page=&showapi_sign=09ce6a76e9a749c0be4c4eba6b890671");
-		InputStream in=u.openStream();
-		ByteArrayOutputStream out=new ByteArrayOutputStream();
-		try {
-			byte buf[]=new byte[1024];
-			int read = 0;
-			while ((read = in.read(buf)) > 0) {
-				out.write(buf, 0, read);
+//		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+//		String newtime=format.format(new Date());
+//		String type=request.getParameter("type");
+//		String page=request.getParameter("page");
+//		URL u=new URL("http://a.apix.cn/heweather/x3/free/weather?city=beijing&apix-key=6b50cc33583f4306677b4492f0828531");
+//		InputStream in=u.openStream();
+//		ByteArrayOutputStream out=new ByteArrayOutputStream();
+//		try {
+//			byte buf[]=new byte[1024];
+//			int read = 0;
+//			while ((read = in.read(buf)) > 0) {
+//				out.write(buf, 0, read);
+//			}
+//		}  finally {
+//			if (in != null) {
+//				in.close();
+//			}
+//		}
+//		byte b[]=out.toByteArray( );
+//		String result=new String(b,"utf-8");
+//		response.getWriter().write(result);
+//		response.getWriter().flush();
+//		response.getWriter().close();
+		
+		OkHttpClient client = new OkHttpClient();
+		Request request2 = new Request.Builder()
+		  .url("http://a.apix.cn/heweather/x3/free/weather?cityid=CN101280601")
+		  .get()
+		  .addHeader("accept", "application/json")
+		  .addHeader("content-type", "application/json")
+		  .addHeader("apix-key", "6b50cc33583f4306677b4492f0828531")
+		  .build();
+		Response response2 = client.newCall(request2).execute();
+		if (response2.isSuccessful()) { 
+			InputStream in=response2.body().byteStream();
+			ByteArrayOutputStream out=new ByteArrayOutputStream();
+			try {
+				byte buf[]=new byte[1024];
+				int read = 0;
+				while ((read = in.read(buf)) > 0) {
+					out.write(buf, 0, read);
+				}
+			}  finally {
+				if (in != null) {
+					in.close();
+				}
 			}
-		}  finally {
-			if (in != null) {
-				in.close();
-			}
-		}
-		byte b[]=out.toByteArray( );
-		String result=new String(b,"utf-8");
-		response.getWriter().write(result);
-		response.getWriter().flush();
-		response.getWriter().close();
+			byte b[]=out.toByteArray( );
+			String result=new String(b,"utf8");
+			response.setContentType("text/javascript; charset=utf-8");
+			response.getWriter().write(result);
+			response.getWriter().flush();
+			response.getWriter().close();
+		} else {        
+			throw new IOException("Unexpected code " + response);
+	    }
 	}
 
 }

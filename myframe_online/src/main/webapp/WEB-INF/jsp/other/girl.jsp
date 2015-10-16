@@ -37,7 +37,7 @@ function initData(){
 			
 			
 			$("#J_GirlsList").children('li').remove();
-			for(var i=0;i<=10;i++){
+			for(var i=0;i<=9;i++){
 			//alert(data.showapi_res_body.cityInfo.c1);
 				$("#J_GirlsList").append(
 						"<li class='item'>"+
@@ -60,6 +60,40 @@ function initData(){
 			console.info("get girl images error!");
 		}
 	});
+	
+	
+	$.ajax({  		    		
+		url: "<%=path%>/user/girlpage2.htm", 
+		type : "post",
+		cache:false,
+		dataType:"json",
+		success:function(data){
+			$("#J_GirlsList2").children('li').remove();
+			for(var i=2;i<=16;i++){
+			//alert(data.showapi_res_body.cityInfo.c1);
+				$("#J_GirlsList2").append(
+						"<li class='item'>"+
+					    "<a href='"+(data[i].url)+"' target='_blank' class='item-link'>"+
+					       " <div class='item-wrap'> "+
+					           " <div class='img'><img src='"+(data[i].picUrl)+"'></div>"+
+					           " <div class='info'>"+
+					               " <span class='name'>"+(data[i].title)+"</span>"+
+					           " </div>"+
+					            "<div class='info row2'>"+
+					               
+					           " </div>"+
+					       " </div>"+
+					  "  </a>"+
+					"</li>"
+				);
+			}
+			
+			},
+		error:function(data){
+			console.info("get girl images error!");
+		}
+	});
+	
 }
 
 function reload(){
@@ -88,21 +122,22 @@ body {
 .girls-list-wrap .girls-list {
     width: 1155px;
     margin: 0 auto;
+    background-color: transparent;
 }
 .clearfix {
     display: block;
     zoom: 1;
 }
 .girls-list-wrap .girls-list .item {
-    width: 230px;
-    height: 288px;
+    width: 194px;
+    height: 338px;
     float: left;
     position: relative;
     margin: -1px 0 0 -1px;
 }
 .girls-list-wrap .girls-list .item-wrap {
-    width: 228px;
-    height: 288px;
+    width: 190px;
+    height: 333px;
     position: absolute;
     float: left;
     border: 1px solid #a0a0a0;
@@ -128,7 +163,7 @@ ul {
 }
 .girls-list-wrap .girls-list .item img {
     width: 100%;
-    height: 228px;
+    height: 285px;
     -webkit-transition-property: height;
     -webkit-transition-duration: .2s;
     -webkit-transition-timing-function: ease-in-out;
@@ -149,15 +184,15 @@ fieldset, img {
     border: 0;
 }
 .girls-list-wrap .girls-list .item a:hover .item-wrap {
-    width: 246px;
-    height: 304px;
+    width: 190px;
+    height: 340px;
     border: 2px solid #282828;
     background-color: #282828;
     margin: -10px 0 0 -10px;
     z-index: 1;
 }
 .girls-list-wrap .girls-list .item a:hover img {
-    height: 246px;
+    height: 285px;
 }
 .girls-list-wrap .girls-list .item a:hover .info .city, .girls-list-wrap .girls-list .item a:hover .info .name {
     color: #fff;
@@ -196,7 +231,16 @@ img{width: 190px;height: 290px;}
 </style>
 </head>
 <body style="background-image: url('../common/images/weathbg.png');">
-<h3 style="color:#fff;">易源接口-美女图片<a style="color:#FBAA53"  href="javascript:void(0)" onclick="reload()">刷新</a> </h3>
+	<h3 style="color:#fff;">apix接口-美女图片<a style="color:#FBAA53"  href="javascript:void(0)" onclick="reload()">刷新</a> </h3>
+	<div class="girls-list-wrap2 girls-list-wrap">
+		<ul class="girls-list clearfix" id="J_GirlsList2">
+		</ul>
+	</div>
+	<h3 style="color:#fff;">易源接口-美女图片<a style="color:#FBAA53"  href="javascript:void(0)" onclick="reload()">刷新</a> </h3>
+	<div class="girls-list-wrap">
+		<ul class="girls-list clearfix" id="J_GirlsList">
+		</ul>
+	</div>
 	<ul id="weath1"></ul>
 	<ul id="weath2"></ul>
 	<ul id="weath3"></ul>
@@ -207,9 +251,6 @@ img{width: 190px;height: 290px;}
 	<ul id="weath8"></ul>
 	<ul id="weath9"></ul>
 	<ul id="weath10"></ul>
-	<div class="girls-list-wrap">
-		<ul class="girls-list clearfix" id="J_GirlsList">
-		</ul>
-	</div>
+	
 </body>
 </html>
