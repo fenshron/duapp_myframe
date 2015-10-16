@@ -112,7 +112,7 @@ public class OtherController  extends BaseController {
  	    }
  	    
  	   if("".equals(filename)&&!"".equals(copyto)){
-	    	  result = Mail.sendAndCc(smtp, from, to, copyto, content, username, password, filename);  
+	    	  result = Mail.sendAndCc(smtp, from, to, copyto,subject, content, username, password, null);  
 	    }
        if("".equals(filename)&&"".equals(copyto)){
     	  result = Mail.send(smtp, from, to, content, username, password, filename);  

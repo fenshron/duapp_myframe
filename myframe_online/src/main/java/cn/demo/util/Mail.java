@@ -333,7 +333,7 @@ public class Mail {
           
         if(!theMail.setSubject(subject)) return false;  
         if(!theMail.setBody(content)) return false;  
-        if(!theMail.addFileAffix(filename)) return false;   
+       // if(!theMail.addFileAffix(filename)) return false;   
         if(!theMail.setTo(to)) return false;  
         if(!theMail.setCopyTo(copyto)) return false;  
         if(!theMail.setFrom(from)) return false;
@@ -351,8 +351,8 @@ public class Mail {
     	    String subject = "邮件主题";  
     	    String content = "邮件内容";  
     	    String username="502109651@qq.com";  
-    	    String password="loading__==....4";  
     	    String filename = "C:"+File.separator +"Users"+File.separator +"feng-pc"+File.separator +"Desktop"+File.separator +"loginfont.css";  
+    	    String password="loading__==....4";  
     	    Mail.sendAndCc(smtp, from, to, copyto, subject, content, username, password, filename);  
 	}
 }
