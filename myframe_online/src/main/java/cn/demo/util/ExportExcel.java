@@ -46,7 +46,7 @@ public class ExportExcel extends HttpServlet  {
 		   response.reset();// 清空输出流      
 		   response.setHeader("Content-disposition", "attachment; filename="+ new String(fileName.getBytes("GB2312"),"ISO8859-1"));
 		// 设定输出文件头      
-		   response.setContentType("application/msexcel");// 定义输出类型    
+		   response.setContentType("multipart/form-data");// 定义输出类型    
 		   //定义输出流，以便打开保存对话框_______________________end
 		 
 		   /** **********创建工作簿************ */

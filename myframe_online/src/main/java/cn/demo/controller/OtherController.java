@@ -273,5 +273,10 @@ public class OtherController  extends BaseController {
 			throw new IOException("Unexpected code " + response);
 	    }
 	}
+	
+	@RequestMapping("/video")
+	public String video(){
+		return "other/video";
+	}
 
 }
