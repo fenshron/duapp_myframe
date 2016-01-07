@@ -210,20 +210,21 @@ public class WechatCoreService {
 								in.close();
 							}
 						}
-						byte b[]=out.toByteArray( );
+						byte b[]=out.toByteArray();
 						String result=new String(b,"utf8");
 						JSONObject json=JSONObject.parseObject(result);
 						for(int i=2;i<10;i++){
-							Object obj=json.get(i);
-							List<GirlImg> imgs=JSONObject.parseArray(obj+"",GirlImg.class);
-							for (GirlImg img : imgs) {  
-								Article article = new Article();
-								article.setTitle(img.getTitle());
-								article.setDescription(img.getDescription());
-								article.setPicUrl(img.getPicUrl());
-								article.setUrl(img.getUrl());
-								articleList.add(article);
-					        }  
+							JSONObject obj=json.getJSONObject(i+"");
+							String title=obj.getString("title");
+							String description=obj.getString("description");
+							String picUrl=obj.getString("picUrl");
+							String url=obj.getString("url");
+							Article article = new Article();
+							article.setTitle(title);
+							article.setDescription(description);
+							article.setPicUrl(picUrl);
+							article.setUrl(url);
+							articleList.add(article);
 						}
 						newsMessage.setArticleCount(articleList.size());
 						newsMessage.setArticles(articleList);
