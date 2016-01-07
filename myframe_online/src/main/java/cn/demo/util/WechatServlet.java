@@ -57,7 +57,8 @@ public class WechatServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		message(request,response);
+		//message(request,response);
+		response.getWriter().write(WechatCoreService.processRequest(request));
 	}
 	
 	 private void message(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{  
