@@ -1,10 +1,18 @@
 package cn.demo.util;
  
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+
+import com.alibaba.fastjson.JSONObject;
+
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import cn.demo.util.wechatservice.response.Article;
 import cn.demo.util.wechatservice.response.NewsMessage;
 import cn.demo.util.wechatservice.response.TextMessage;
@@ -178,16 +186,63 @@ public class WechatCoreService {
 					newsMessage.setArticleCount(articleList.size());
 					newsMessage.setArticles(articleList);
 					respMessage = MessageUtil.newsMessageToXml(newsMessage);
+				}else if("6".equals(content)){
+					OkHttpClient client = new OkHttpClient();
+					Request request2 = new Request.Builder()
+					  .url("http://a.apix.cn/huceo/meinv/?num=20")
+					  .get()
+					  .addHeader("accept", "application/json")
+					  .addHeader("content-type", "application/json")
+					  .addHeader("apix-key", "f5acfaf1edc449b67caf3f61757fd5d0")
+					  .build();
+					Response response2 = client.newCall(request2).execute();
+					if (response2.isSuccessful()) { 
+						InputStream in=response2.body().byteStream();
+						ByteArrayOutputStream out=new ByteArrayOutputStream();
+						try {
+							byte buf[]=new byte[1024];
+							int read = 0;
+							while ((read = in.read(buf)) > 0) {
+								out.write(buf, 0, read);
+							}
+						}  finally {
+							if (in != null) {
+								in.close();
+							}
+						}
+						byte b[]=out.toByteArray( );
+						String result=new String(b,"utf8");
+						JSONObject json=JSONObject.parseObject(result);
+						for(int i=2;i<10;i++){
+							Object obj=json.get(i);
+							List<GirlImg> imgs=JSONObject.parseArray(obj+"",GirlImg.class);
+							for (GirlImg img : imgs) {  
+								Article article = new Article();
+								article.setTitle(img.getTitle());
+								article.setDescription(img.getDescription());
+								article.setPicUrl(img.getPicUrl());
+								article.setUrl(img.getUrl());
+								articleList.add(article);
+					        }  
+						}
+						newsMessage.setArticleCount(articleList.size());
+						newsMessage.setArticles(articleList);
+						respMessage = MessageUtil.newsMessageToXml(newsMessage);
+						}
 				}else{
-					MessageUtil.isQqFace(content);
 					TextMessage text=new TextMessage();
-					text.setContent(content);
+					if(MessageUtil.isQqFace(content)){
+						text.setContent(content);
+					}else{
+						text.setContent("请输入数字1-6查看内容");
+					}
 					text.setToUserName(fromUserName);
 					text.setFromUserName(toUserName);
 					text.setCreateTime(new Date().getTime());
 					text.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
 					text.setFuncFlag(0);
 					respMessage = MessageUtil.textMessageToXml(text);
+					
 				}
 			}
 		} catch (Exception e) {
