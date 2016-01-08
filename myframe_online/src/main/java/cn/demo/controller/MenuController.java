@@ -17,7 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.demo.model.PubResources;
-import cn.demo.pageModel.ResourcesMenu;
+import cn.demo.pojo.ResourcesMenu;
 import cn.demo.service.PageService;
 
 @Controller

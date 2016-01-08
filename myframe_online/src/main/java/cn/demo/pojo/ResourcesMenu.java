@@ -1,4 +1,4 @@
-package cn.demo.pageModel;
+package cn.demo.pojo;
 
 import java.util.Map;
  

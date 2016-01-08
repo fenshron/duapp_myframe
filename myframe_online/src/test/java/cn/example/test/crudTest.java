@@ -13,7 +13,7 @@ import cn.demo.model.PubResources;
 import cn.demo.model.PubRoles;
 import cn.demo.model.PubUsers;
 import cn.demo.model.User;
-import cn.demo.pageModel.ResourcesMenu;
+import cn.demo.pojo.ResourcesMenu;
 import cn.demo.service.PageService;
 import cn.demo.service.UserService;
 

@@ -1,4 +1,4 @@
-package cn.demo.pageModel;
+package cn.demo.pojo;
 
 public class ResourcesPage implements java.io.Serializable {
 

@@ -1,4 +1,4 @@
-package cn.demo.util;
+package cn.demo.util.wechatservice.manager;
 
 import java.io.InputStream;
 import java.io.Writer;
